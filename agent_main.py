@@ -295,7 +295,7 @@ elif menu_choice == "대화하기":
     if model_choice == "Elon Musk":
         select_model = "Elon Musk"
         txt_path = "./rag_data/Elon_all.txt"
-        text_loader = TextLoader(txt_path)
+        text_loader = TextLoader(txt_path, encoding="utf-8")
         documents = text_loader.load()
 
         # 투자 방법에 따른 추가 데이터 로드 및 RAG에 포함
@@ -322,7 +322,7 @@ elif menu_choice == "대화하기":
         pdf_documents = pdf_loader.load()
 
         txt_path = "./rag_data/Warren_all.txt"
-        text_loader = TextLoader(txt_path)
+        text_loader = TextLoader(txt_path, encoding="utf-8")
         txt_documents = text_loader.load()
 
         documents = pdf_documents + txt_documents
@@ -355,7 +355,7 @@ elif menu_choice == "대화하기":
         pdf_documents2 = pdf_loader2.load()
 
         txt_path = "./rag_data/Benjamin_all.txt"
-        text_loader = TextLoader(txt_path)
+        text_loader = TextLoader(txt_path, encoding="utf-8")
         txt_documents = text_loader.load()
 
         documents = pdf_documents + txt_documents + pdf_documents2

@@ -141,7 +141,7 @@ def plot_dividend_stock_metrics(data, category_name, top_n):
     # 상위 top_n 항목 선택
     data = data.head(top_n)
     
-    st.subheader(f"{category_name}")
+    # st.subheader(f"{category_name}")
     fig, axes = plt.subplots(2, 3, figsize=(18, 12))  # 2x3 레이아웃
 
     # PBR 시각화 - 상자 그림과 막대 그래프

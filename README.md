@@ -41,3 +41,11 @@ pip install -r req.txt
 ```shell
 streamlit run agent_main.py
 ```
+
+# Preview
+
+![1731383370526](image/README/1731383370526.png)
+
+![1731383393378](image/README/1731383393378.png)
+
+![1731383407476](image/README/1731383407476.png)

@@ -140,7 +140,7 @@ if menu_choice == "종목추천 보기":
             # 선택된 회복주 종목을 session_state에 저장
             st.session_state["recovery_df"] = recovery_df
             # 확인용 출력
-            st.write("선택한 종목 확인:", recovery_df)
+            st.write("선택한 종목 확인", recovery_df)
 
         elif investment_method == "성장주":
             st.subheader("성장주")
@@ -160,7 +160,7 @@ if menu_choice == "종목추천 보기":
             # 선택된 회복주 종목을 session_state에 저장
             st.session_state["growth_df"] = growth_df
             # 확인용 출력
-            st.write("선택한 종목 확인:", growth_df)
+            st.write("선택한 종목 확인", growth_df)
 
 
         elif investment_method == "가치주":
@@ -181,7 +181,7 @@ if menu_choice == "종목추천 보기":
             # 선택된 회복주 종목을 session_state에 저장
             st.session_state["value_df"] = value_df
             # 확인용 출력
-            st.write("선택한 종목 확인:", value_df)
+            st.write("선택한 종목 확인", value_df)
 
         elif investment_method == "배당주":
             st.subheader("배당주")
@@ -201,7 +201,7 @@ if menu_choice == "종목추천 보기":
             # 선택된 회복주 종목을 session_state에 저장
             st.session_state["divedend_df"] = divedend_df
             # 확인용 출력
-            st.write("선택한 종목 확인:", divedend_df)
+            st.write("선택한 종목 확인", divedend_df)
 
         elif investment_method == "혼합주":
             st.subheader("혼합주")
@@ -221,7 +221,7 @@ if menu_choice == "종목추천 보기":
             # 선택된 회복주 종목을 session_state에 저장
             st.session_state["mixed_df"] = mixed_df
             # 확인용 출력
-            st.write("선택한 종목 확인:", mixed_df)
+            st.write("선택한 종목 확인", mixed_df)
 
 
 elif menu_choice == "시각화 보기":
@@ -492,6 +492,8 @@ elif menu_choice == "대화하기":
 
     # 사용자 질문 입력
     query_korean = st.text_input("당신의 질문을 입력하세요", key="input_text")
+
+    
 
     # 영어로 대화할 때 더 좋은 응답을 생성하므로 영어로 번역해서 모델에 입력
     query = GoogleTranslator(source='ko', target='en').translate(query_korean)

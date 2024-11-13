@@ -271,7 +271,7 @@ elif menu_choice == "대화하기":
                 data = json.load(file)
         elif invest_category == "혼합주":
             additional_system = agentmodule.mixed_system
-            with open("./stock_data/sy_mixed_stocks.json", "r", encoding="utf-8") as file:
+            with open("./stock_data/sy_result.json", "r", encoding="utf-8") as file:
                 data = json.load(file)
         return data, additional_system
     

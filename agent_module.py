@@ -81,6 +81,10 @@ def plot_density(data, metric, title, color, ax):
     ax.set_ylabel("Density")
 
 def plot_stock_metrics(data, category_name, top_n):
+    # data가 리스트 형태일 경우 DataFrame으로 변환
+    if isinstance(data, list):
+        data = pd.DataFrame(data)
+
     data = data.head(top_n)
     
     # st.subheader(f"{category_name}")

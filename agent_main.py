@@ -86,6 +86,7 @@ sy_mixed_data = agentmodule.load_json_data_utf8(sy_mixed_stocks_path)
 st.sidebar.title("메뉴")
 menu_choice = st.sidebar.radio("작업 선택", ["대화하기", "종목추천 보기", "시각화 보기"])
 
+
 # JSON 파일 기반 보기
 if menu_choice == "종목추천 보기":
     # JSON 파일 로드 및 표시
@@ -93,6 +94,30 @@ if menu_choice == "종목추천 보기":
 
     # 투자 방법 선택 멀티셀렉트박스 추가
     selected_methods = st.multiselect("투자 방법을 선택하세요", ["회복주", "성장주", "가치주", "배당주", "혼합주"])
+
+    # 선택한 종목 리스트
+    selected_stocks = [] # recovery
+    selected_stocks_growth = []
+    selected_stocks_value = []
+    selected_stocks_divedend = []
+    selected_stocks_mixed = []
+
+    # 선택한 종목을 session_state에 저장하거나 불러오기
+    if "selected_stocks" not in st.session_state:
+        st.session_state.selected_stocks = []
+
+    if "selected_stocks_growth" not in st.session_state:
+        st.session_state.selected_stocks_growth = []
+
+    if "selected_stocks_value" not in st.session_state:
+        st.session_state.selected_stocks_value = []
+
+    if "selected_stocks_divedend" not in st.session_state:
+        st.session_state.selected_stocks_divedend = []
+        
+    if "selected_stocks_mixed" not in st.session_state:
+        st.session_state.selected_stocks_mixed = []
+
 
     # 선택된 투자 방법에 따라 데이터를 표시
     for investment_method in selected_methods:
@@ -104,6 +129,19 @@ if menu_choice == "종목추천 보기":
                     """)
             st.dataframe(yh_recovery_data)
 
+
+            # 멀티셀렉트 박스를 통해 종목 선택
+            selected_stocks += st.multiselect("회복주에서 종목을 선택하세요", yh_recovery_data["종목명"].tolist(), default=st.session_state.selected_stocks)
+            # 선택한 종목을 session_state에 저장
+            st.session_state.selected_stocks = selected_stocks
+            # DataFrame에서 선택한 종목들만 필터링
+            recovery_df = yh_recovery_data[yh_recovery_data["종목명"].isin(selected_stocks)]
+            recovery_df["투자방법"] = "회복주"  # 투자 방법 열 추가
+            # 선택된 회복주 종목을 session_state에 저장
+            st.session_state["recovery_df"] = recovery_df
+            # 확인용 출력
+            st.write("선택한 종목 확인:", recovery_df)
+
         elif investment_method == "성장주":
             st.subheader("성장주")
             st.write("""
@@ -111,6 +149,19 @@ if menu_choice == "종목추천 보기":
                     ###### PSR 값이 0.1 이하, PER 값이 10 이하, PCR 값이 5 이하\n
                     """)
             st.dataframe(yh_growth_data)
+
+            # 멀티셀렉트 박스를 통해 종목 선택
+            selected_stocks_growth += st.multiselect("성장주에서 종목을 선택하세요", yh_growth_data["종목명"].tolist(), default=st.session_state.selected_stocks_growth)
+            # 선택한 종목을 session_state에 저장
+            st.session_state.selected_stocks_growth = selected_stocks_growth
+            # DataFrame에서 선택한 종목들만 필터링
+            growth_df = yh_growth_data[yh_growth_data["종목명"].isin(selected_stocks_growth)]
+            growth_df["투자방법"] = "성장주"  # 투자 방법 열 추가
+            # 선택된 회복주 종목을 session_state에 저장
+            st.session_state["growth_df"] = growth_df
+            # 확인용 출력
+            st.write("선택한 종목 확인:", growth_df)
+
 
         elif investment_method == "가치주":
             st.subheader("가치주")
@@ -120,6 +171,18 @@ if menu_choice == "종목추천 보기":
                     """)
             st.dataframe(yj_value_data)
 
+            # 멀티셀렉트 박스를 통해 종목 선택
+            selected_stocks_value += st.multiselect("가치주에서 종목을 선택하세요", yj_value_data["종목명"].tolist(), default=st.session_state.selected_stocks_value)
+            # 선택한 종목을 session_state에 저장
+            st.session_state.selected_stocks_value = selected_stocks_value
+            # DataFrame에서 선택한 종목들만 필터링
+            value_df = yj_value_data[yj_value_data["종목명"].isin(selected_stocks_value)]
+            value_df["투자방법"] = "가치주"  # 투자 방법 열 추가
+            # 선택된 회복주 종목을 session_state에 저장
+            st.session_state["value_df"] = value_df
+            # 확인용 출력
+            st.write("선택한 종목 확인:", value_df)
+
         elif investment_method == "배당주":
             st.subheader("배당주")
             st.write("""
@@ -128,6 +191,18 @@ if menu_choice == "종목추천 보기":
                     """)
             st.dataframe(yj_dividend_data)
 
+            # 멀티셀렉트 박스를 통해 종목 선택
+            selected_stocks_divedend += st.multiselect("배당주에서 종목을 선택하세요", yj_dividend_data["종목명"].tolist(), default=st.session_state.selected_stocks_divedend)
+            # 선택한 종목을 session_state에 저장
+            st.session_state.selected_stocks_divedend = selected_stocks_divedend
+            # DataFrame에서 선택한 종목들만 필터링
+            divedend_df = yj_dividend_data[yj_dividend_data["종목명"].isin(selected_stocks_divedend)]
+            divedend_df["투자방법"] = "배당주"  # 투자 방법 열 추가
+            # 선택된 회복주 종목을 session_state에 저장
+            st.session_state["divedend_df"] = divedend_df
+            # 확인용 출력
+            st.write("선택한 종목 확인:", divedend_df)
+
         elif investment_method == "혼합주":
             st.subheader("혼합주")
             st.write("""
@@ -135,6 +210,18 @@ if menu_choice == "종목추천 보기":
                     ###### PBR 값이 1 이하 0 초과, PER 값이 15 이하 0 초과, DY 값이 0.03 이상, ROE 값 0.1 이상\n
                     """)
             st.dataframe(sy_mixed_data)
+
+            # 멀티셀렉트 박스를 통해 종목 선택
+            selected_stocks_mixed += st.multiselect("혼합주에서 종목을 선택하세요", sy_mixed_data["종목명"].tolist(), default=st.session_state.selected_stocks_mixed)
+            # 선택한 종목을 session_state에 저장
+            st.session_state.selected_stocks_mixed = selected_stocks_mixed
+            # DataFrame에서 선택한 종목들만 필터링
+            mixed_df = sy_mixed_data[sy_mixed_data["종목명"].isin(selected_stocks_mixed)]
+            mixed_df["투자방법"] = "혼합주"  # 투자 방법 열 추가
+            # 선택된 회복주 종목을 session_state에 저장
+            st.session_state["mixed_df"] = mixed_df
+            # 확인용 출력
+            st.write("선택한 종목 확인:", mixed_df)
 
 
 elif menu_choice == "시각화 보기":
@@ -156,6 +243,11 @@ elif menu_choice == "시각화 보기":
                     """)
             agentmodule.plot_stock_metrics(yh_recovery_data, "회복주", top_n)
 
+            # session_state에서 recovery_df를 불러와 시각화
+            if "recovery_df" in st.session_state and not st.session_state["recovery_df"].empty:
+                st.subheader("선택한 회복주 종목 시각화")
+                agentmodule.plot_stock_metrics(st.session_state["recovery_df"], "선택한 회복주", top_n)
+
         elif investment_method == "성장주":
             st.subheader("성장주")
             st.write("""
@@ -163,12 +255,22 @@ elif menu_choice == "시각화 보기":
                     """)
             agentmodule.plot_stock_metrics(yh_growth_data, "성장주", top_n)
 
+            # session_state에서 growth_df를 불러와 시각화
+            if "growth_df" in st.session_state and not st.session_state["growth_df"].empty:
+                st.subheader("선택한 성장주 종목 시각화")
+                agentmodule.plot_stock_metrics(st.session_state["growth_df"], "선택한 성장주", top_n)
+
         elif investment_method == "가치주":
             st.subheader("가치주")
             st.write("""
                     ##### 자산 가치, 수익성, 현금 창출력에 비해 주가가 크게 저평가된 종목
                     """)
             agentmodule.plot_value_stock_metrics(yj_value_data, "가치주", top_n)
+
+            # session_state에서 value_df를 불러와 시각화
+            if "value_df" in st.session_state and not st.session_state["value_df"].empty:
+                st.subheader("선택한 배당주 종목 시각화")
+                agentmodule.plot_value_stock_metrics(st.session_state["value_df"], "선택한 가치주", top_n)
             
         elif investment_method == "배당주":
             st.subheader("배당주")
@@ -176,6 +278,11 @@ elif menu_choice == "시각화 보기":
                     ##### 높은 배당을 제공하면서 내재 가치 대비 주가가 낮은 종목
                     """)
             agentmodule.plot_dividend_stock_metrics(yj_dividend_data, "배당주", top_n)
+
+            # session_state에서 divedend_df를 불러와 시각화
+            if "divedend_df" in st.session_state and not st.session_state["divedend_df"].empty:
+                st.subheader("선택한 가치주 종목 시각화")
+                agentmodule.plot_dividend_stock_metrics(st.session_state["divedend_df"], "선택한 배당주", top_n)
             
         elif investment_method == "혼합주":
             st.subheader("혼합주")
@@ -183,6 +290,11 @@ elif menu_choice == "시각화 보기":
                     ##### 내재 가치 대비 주가가 낮게 평가되었고, 안정적인 배당 수익을 제공하며, 높은 자본 수익성을 보유한 종목
                     """)
             agentmodule.plot_mixed_stock_metrics(sy_mixed_data, "혼합주", top_n)
+
+             # session_state에서 mixed_df를 불러와 시각화
+            if "mixed_df" in st.session_state and not st.session_state["mixed_df"].empty:
+                st.subheader("선택한 혼합주 종목 시각화")
+                agentmodule.plot_mixed_stock_metrics(st.session_state["mixed_df"], "선택한 배당주", top_n)
             
 
 

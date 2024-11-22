@@ -2,7 +2,7 @@
 
 This is an AI Agent that provides investment advice based on the investment philosophies, decision-making processes, and strategies of celebrities such as Warren Buffett, Elon Musk, and Benjamin Graham.
 
-[TestSite - temporary](http://isisip.iptime.org:8501)
+[TestSite - temporary](http://isisip.iptime.org:8501) - Closed
 
 # Running Guide
 
